@@ -7,7 +7,7 @@ use App\Goodsin;
 use App\Goodsout;
 use App\Category;
 use App\Stock;
-use App\Add;
+
 
 class HomeController extends Controller
 {
@@ -32,9 +32,9 @@ class HomeController extends Controller
         $barangKeluar = Goodsout::all();
         $categories = Category::all();
         $dataBarang = Stock::all();
-        
 
+        
         return view('dashboard.dashboard',
-        compact(['barangMasuk', 'barangKeluar', 'categories' , 'stock' , 'tambahUser']));
+        compact(['barangMasuk', 'barangKeluar', 'categories' , 'stock']));
     }
 }
