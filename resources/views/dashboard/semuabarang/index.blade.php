@@ -1,15 +1,15 @@
 @extends('dashboard.layouts.master')
-@section('title', 'Data Barang')
+@section('title', 'Semua Barang')
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Data Barang
+            All Device
             <small>Simomen</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-home"></i> Dashboard</a></li>
-            <li class="active">Data Barang</li>
+            <li class="active">All Device</li>
         </ol>
     </section>
 
@@ -19,8 +19,8 @@
         <div class="row pull-right">
             <div class="col-md-3">
                 <p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createDataBarang">
-                        Import/Export File Excel
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createSemuaBarang">
+                        Tambahkan Barang
                     </button>
                 </p>
             </div>
@@ -29,7 +29,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Daftar Barang Yang Tersedia Saat Ini</h3>
+                        <h3 class="box-title">Daftar Barang</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -38,6 +38,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Name</th>
+                                <th>Status</th>
                                 <th>Device</th>
                                 <th>Date</th>
                                 <th>Location</th>
@@ -47,25 +48,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if($dataBarang->count() > 0)
-                               @foreach($dataBarang as $dataBarang)
+                            @if($semuaBarang->count() > 0)
+                               @foreach($semuaBarang as $semuaBarang)
                                    <tr>
-                                       <td style="vertical-align: middle;">{{ $dataBarang->id }}</td>
-                                       <td style="vertical-align: middle;">{{ $dataBarang->name }}</td>
-                                       <td style="vertical-align: middle;">{{ $dataBarang->device->no_registration }} - {{ $dataBarang->device->name }}</td>
-                                       <td style="vertical-align: middle;">{{ $dataBarang->date }}</td>
-                                       <td style="vertical-align: middle;">{{ $dataBarang->location->name }}</td>
-                                       <td style="vertical-align: middle;">{{ $dataBarang->users->name }}</td>
-                                       <td style="vertical-align: middle;">{{ $dataBarang->category->name }}</td>
+                                       <td style="vertical-align: middle;">{{ $semuaBarang->id }}</td>
+                                       <td style="vertical-align: middle;">{{ $semuaBarang->name }}</td>
+                                       <td style="vertical-align: middle;">{{ $semuaBarang->status }}</td>
+                                       <td style="vertical-align: middle;">{{ $semuaBarang->device->no_registration }} - {{ $barangMasuk->device->name }}</td>
+                                       <td style="vertical-align: middle;">{{ $semuaBarang->date }}</td>
+                                       <td style="vertical-align: middle;">{{ $semuaBarang->location->name }}</td>
+                                       <td style="vertical-align: middle;">{{ $semuaBarang->users->name }}</td>
+                                       <td style="vertical-align: middle;">{{ $semuaBarang->category->name }}</td>
                                        <td style="vertical-align: middle;">
                                            <div class="row">
                                                <div class="col-md-4">
-                                                   <a href="{{ route('databarang.show', $dataBarang->id)  }}" class="btn btn-info">
+                                                   <a href="{{ route('semuabarang.show', $semuaBarang->id)  }}" class="btn btn-info">
                                                        Edit
                                                    </a>
                                                </div>
                                                <div class="col-md-4">
-                                                   <form action="{{route('databarang.destroy', $dataBarang->id)}}" method="POST">
+                                                   <form action="{{route('semuabarang.destroy', $semuaBarang->id)}}" method="POST">
                                                        <input type="hidden" name="_method" value="DELETE">
                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                                        <button type="submit" onclick="return confirm('Are you sure to delete?');" class="btn btn-danger">Delete</button>
@@ -90,43 +92,28 @@
         </div>
         <!-- /.row (main row) -->
 
-        <div class="modal fade" id="createDataBarang">
+        <div class="modal fade" id="createSemuaBarang">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title text-center">Import/Export File</h4>
+                        <h4 class="modal-title text-center">Tambahkan Barang</h4>
                     </div>
                     <div class="modal-body">
                         <!-- form start -->
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('barangkeluar.store') }}" enctype="multipart/form-data">
-                            <div class="panel body">
-                 <form class="form-horizontal" role="form" enctype="multipart/form-data" method="POST" action{{url('importproduk')}}">
-                 {{csrf_field()}}
-                    <div class="form-group">
-                        <div class="col-md-3 col-md-offset-3">
-                           <a href="{{url('exportproduk')}}" class="btn btn-success">Export</a>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="file" class="col-md-3 Excel</label> control-label">File
-                        <div class="col-md-3">
-                           <input id="file" type="file" class="form-control" name="file">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                         <div class="col-md-3 col-md-offset-3">
-                           <button type="submit" class="btn btn-primary">Import</button>
-                        </div>
-                    </div>
-                </form>
-                </div>
-             </div>
-        </div>
-    </div>
-</div>
-</section>
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('semuabarang.store') }}" enctype="multipart/form-data">
+                            <div class="box-body">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+    </section>
     <!-- /.content -->
 @endsection
 @push('script')

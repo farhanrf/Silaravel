@@ -39,9 +39,10 @@ Route::prefix('dashboard')->group(function () {
 	Route::resource('/barangmasuk', 'GoodsinController');
 	Route::resource('/barangkeluar', 'GoodsoutController');
 	Route::resource('/databarang' , 'StockController');
+	Route::resource('/semuabarang' , 'AlldeviceController');
 	Route::resource('/tambahuser' , 'RegistrationController');
-Route::post('register', 'Auth\RegitrationController@register')->name('register');
-Route::get('register', 'Auth\RegistrationController@showRegistrationForm')->name('registration.store');
+Route::get('register', 'Auth\RegistrationController@showRegistrationForm')->name('register');
+Route::post('register', 'Auth\RegistrationController@store')->name('tambahuser.store');
 Route::get('importexport','StockController@importExport'); 
 Route::post('importproduk','StockController@importExcel'); 
 Route::get('exportproduk','StockController@exportExcel');
